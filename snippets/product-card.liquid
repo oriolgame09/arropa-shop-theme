@@ -2,7 +2,8 @@
 <article class="card reveal">
   <a class="card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
     {%- if product.featured_image -%}
-      {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '320, 480, 640, 900', sizes: '(min-width: 990px) 25vw, 50vw', alt: product.featured_image.alt | default: product.title, class: 'card__img' }}
+      {%- assign card_alt = product.featured_image.alt | default: product.title | escape -%}
+      {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '320, 480, 640, 900', sizes: '(min-width: 990px) 25vw, 50vw', alt: card_alt, class: 'card__img' }}
       {%- if product.images[1] -%}
         {{ product.images[1] | image_url: width: 900 | image_tag: loading: 'lazy', widths: '320, 480, 640, 900', sizes: '(min-width: 990px) 25vw, 50vw', alt: '', class: 'card__img card__img--hover' }}
       {%- endif -%}

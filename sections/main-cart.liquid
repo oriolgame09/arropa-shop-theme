@@ -14,7 +14,8 @@
         <div class="cart-line">
           <a class="cart-line__img" href="{{ item.url }}">
             {%- if item.image -%}
-              {{ item.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: item.image.alt | default: item.product.title }}
+              {%- assign line_alt = item.image.alt | default: item.product.title | escape -%}
+              {{ item.image | image_url: width: 300 | image_tag: loading: 'lazy', alt: line_alt }}
             {%- endif -%}
           </a>
           <div>

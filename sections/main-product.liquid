@@ -10,7 +10,8 @@
               assign eager = 'eager'
             endif
           -%}
-          {{ media | image_url: width: 1400 | image_tag: loading: eager, widths: '600, 900, 1200, 1400', sizes: '(min-width: 900px) 55vw, 100vw', alt: media.alt | default: product.title }}
+          {%- assign media_alt = media.alt | default: product.title | escape -%}
+          {{ media | image_url: width: 1400 | image_tag: loading: eager, widths: '600, 900, 1200, 1400', sizes: '(min-width: 900px) 55vw, 100vw', alt: media_alt }}
         </figure>
       {%- endif -%}
     {%- else -%}
