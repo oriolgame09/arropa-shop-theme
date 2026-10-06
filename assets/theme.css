@@ -69,6 +69,8 @@ ul, ol { padding: 0; list-style: none; }
 /* ---------- Animación de entrada ---------- */
 .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
 .js .reveal.is-visible { opacity: 1; transform: none; }
+.js .reveal { animation: reveal-failsafe 0s 2.5s forwards; }
+@keyframes reveal-failsafe { to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
@@ -112,8 +114,8 @@ ul, ol { padding: 0; list-style: none; }
 .hero__copy .lead { margin: 28px 0 40px; }
 .hero__note { margin-top: 20px; font-size: 14px; opacity: .7; letter-spacing: .02em; }
 .hero__media { position: relative; }
-.hero__media img, .hero__media .placeholder { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 999px 999px 28px 28px; box-shadow: 0 40px 80px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
-.hero__media .placeholder { background: color-mix(in srgb, var(--ink) 8%, var(--sky)); }
+.media-frame { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; background: color-mix(in srgb, var(--ink) 8%, var(--sky)); box-shadow: 0 40px 80px -30px color-mix(in srgb, var(--ink) 45%, transparent); }
+.media-frame img, .media-frame svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero__badge { position: absolute; left: -4%; bottom: 9%; width: 132px; height: 132px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; text-align: center; padding: 14px; font-family: var(--font-head); font-size: 1.05rem; line-height: 1.15; font-style: italic; transform: rotate(-10deg); animation: float 6s ease-in-out infinite; }
 @keyframes float { 50% { transform: rotate(-4deg) translateY(-8px); } }
 @media (max-width: 899px) {
@@ -187,7 +189,7 @@ ul, ol { padding: 0; list-style: none; }
 .product__gallery { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
 .product__gallery figure { border-radius: 22px; overflow: hidden; background: color-mix(in srgb, var(--ink) 5%, var(--bg)); }
 .product__gallery figure:first-child { grid-column: 1 / -1; }
-.product__gallery img { width: 100%; height: auto; }
+.product__gallery img { display: block; width: 100%; height: auto; }
 .product__info { position: sticky; top: 112px; }
 .product__title { font-family: var(--font-head); font-weight: 350; letter-spacing: -.02em; line-height: 1.05; font-size: clamp(2.2rem, 4vw, 3.5rem); margin-bottom: 16px; }
 .product__price { font-size: 1.4rem; margin-bottom: 28px; }
