@@ -1,4 +1,4 @@
-{%- comment -%} Uso: {% render 'product-card', product: product %} {%- endcomment -%}
+{%- comment -%} Uso: {% render 'product-card', product: product, buy_now: true %} {%- endcomment -%}
 <article class="card reveal">
   <a class="card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
     {%- if product.featured_image -%}
@@ -20,4 +20,13 @@
     <h3 class="card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
     {% render 'price', product: product %}
   </div>
+  {%- if buy_now -%}
+    {%- if product.available == false -%}
+      <a class="btn btn--ghost btn--block card__buy" href="{{ product.url }}">Ver producto</a>
+    {%- elsif product.variants.size == 1 -%}
+      <a class="btn btn--accent btn--block card__buy" href="{{ routes.cart_url }}/{{ product.variants.first.id }}:1">Comprar ahora</a>
+    {%- else -%}
+      <a class="btn btn--accent btn--block card__buy" href="{{ product.url }}">Elegir y comprar</a>
+    {%- endif -%}
+  {%- endif -%}
 </article>

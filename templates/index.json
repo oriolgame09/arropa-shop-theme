@@ -51,6 +51,7 @@
         "heading": "Nuestra colección de <em>invierno</em>",
         "text": "Piezas pensadas para pasar el invierno en casa con calor y sin encender la calefacción.",
         "limit": 6,
+        "buy_now": true,
         "button_label": "Ver toda la colección"
       }
     },

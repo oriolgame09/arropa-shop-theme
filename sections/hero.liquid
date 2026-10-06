@@ -9,7 +9,7 @@
         <p class="lead">{{ section.settings.text }}</p>
       {%- endif -%}
       {%- if section.settings.button_label != blank -%}
-        <a class="btn btn--accent" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        <a class="btn btn--accent" href="{{ section.settings.product.url | default: section.settings.button_link | default: routes.all_products_collection_url }}">
           {{ section.settings.button_label }} {% render 'icon', name: 'arrow' %}
         </a>
       {%- endif -%}
@@ -39,7 +39,8 @@
     { "type": "inline_richtext", "id": "heading", "label": "Título (usa cursiva para resaltar)", "default": "Calor de verdad en casa, <em>sin encender</em> la calefacción" },
     { "type": "textarea", "id": "text", "label": "Texto", "default": "Una bolsa de agua caliente dentro de una funda de peluche que se abrocha a la cintura. Calor durante horas, con las manos libres y sin cables." },
     { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Quiero el mío" },
-    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "product", "id": "product", "label": "Producto estrella (el botón lleva a su página de compra)" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón (si no eliges producto)" },
     { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "29,90 € con envío gratis incluido" },
     { "type": "text", "id": "badge", "label": "Sello redondo (opcional)", "default": "Envío gratis" },
     { "type": "image_picker", "id": "image", "label": "Imagen (vertical, 4:5)" }

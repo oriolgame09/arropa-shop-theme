@@ -287,3 +287,4 @@ ul, ol { padding: 0; list-style: none; }
 .payments { display: flex; gap: 8px; flex-wrap: wrap; }
 .payments svg { width: 38px; height: 24px; }
 @media (max-width: 899px) { .footer__grid { grid-template-columns: 1fr 1fr; } .footer__brand, .footer__news { grid-column: 1 / -1; } }
+.card__buy { margin-top: 14px; padding: 14px 24px; }
