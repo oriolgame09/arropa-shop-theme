@@ -1,0 +1,12 @@
+<div class="wrap">
+  <div class="page-head">
+    <h1 class="display display--lg">Direcciones</h1>
+    <p><a class="link-arrow" href="{{ routes.account_url }}">Volver a mi cuenta</a></p>
+  </div>
+  {%- for address in customer.addresses -%}
+    <div class="cart-line" style="grid-template-columns: 1fr;">{{ address | format_address }}</div>
+  {%- else -%}
+    <p>No tienes direcciones guardadas.</p>
+  {%- endfor -%}
+  <div style="height: clamp(56px, 8vw, 112px)"></div>
+</div>

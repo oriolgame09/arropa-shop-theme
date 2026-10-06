@@ -1,0 +1,35 @@
+<section class="section faq">
+  <div class="wrap wrap--narrow">
+    <div class="section__head reveal" style="margin-bottom: 40px;">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="display display--lg">{{ section.settings.heading }}</h2>
+    </div>
+    {%- for block in section.blocks -%}
+      <details class="faq__item" {{ block.shopify_attributes }}>
+        <summary>{{ block.settings.question }} {% render 'icon', name: 'plus' %}</summary>
+        <div class="faq__answer">{{ block.settings.answer }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sobretítulo", "default": "Dudas" },
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Preguntas <em>frecuentes</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Cuánto tiempo dura caliente?" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Escribe aquí la respuesta.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Preguntas frecuentes", "blocks": [{ "type": "question" }] }]
+}
+{% endschema %}

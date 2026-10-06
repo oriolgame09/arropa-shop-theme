@@ -1,0 +1,54 @@
+{%- assign menu = linklists[section.settings.menu] -%}
+<header class="header" data-header>
+  <div class="wrap header__inner">
+    <button class="icon-btn menu-toggle" type="button" data-drawer-open aria-expanded="false" aria-label="Abrir menú">
+      {% render 'icon', name: 'menu' %}
+    </button>
+
+    <nav class="header__nav" aria-label="Principal">
+      <ul>
+        {%- for link in menu.links -%}
+          <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <a class="logo" href="{{ routes.root_url }}">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 480 | image_tag: width: settings.logo_width, alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+
+    <div class="header__icons">
+      <a class="icon-btn" href="{{ routes.search_url }}" aria-label="Buscar">{% render 'icon', name: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn" href="{{ routes.account_url }}" aria-label="Mi cuenta">{% render 'icon', name: 'user' %}</a>
+      {%- endif -%}
+      <a class="icon-btn" href="{{ routes.cart_url }}" aria-label="Cesta ({{ cart.item_count }})">
+        {% render 'icon', name: 'bag' %}
+        {%- if cart.item_count > 0 -%}<span class="cart-count">{{ cart.item_count }}</span>{%- endif -%}
+      </a>
+    </div>
+  </div>
+
+  <div class="drawer" data-drawer aria-label="Menú">
+    <div class="drawer__top">
+      <span class="logo">{{ shop.name }}</span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="Cerrar menú">{% render 'icon', name: 'close' %}</button>
+    </div>
+    {%- for link in menu.links -%}
+      <a class="drawer__link" href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Cabecera",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menú principal", "default": "main-menu" }
+  ]
+}
+{% endschema %}

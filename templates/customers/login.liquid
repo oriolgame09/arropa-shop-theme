@@ -1,0 +1,19 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1 class="display display--lg">Entrar</h1>
+    {%- form 'customer_login', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}<p class="form-error" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <div class="field"><label for="login-email">Correo electrónico</label><input class="input" id="login-email" type="email" name="customer[email]" autocomplete="email" required></div>
+      <div class="field"><label for="login-pw">Contraseña</label><input class="input" id="login-pw" type="password" name="customer[password]" autocomplete="current-password" required></div>
+      <button class="btn btn--block" type="submit">Entrar</button>
+    {%- endform -%}
+    <p class="alt"><a href="{{ routes.account_register_url }}">Crear cuenta</a> · <a href="#recover" onclick="document.getElementById('recover').hidden=false;return false;">¿Olvidaste la contraseña?</a></p>
+    <div id="recover" hidden style="margin-top:32px;">
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}<p>Te hemos enviado un correo para restablecerla.</p>{%- endif -%}
+        <div class="field"><label for="rec-email">Correo electrónico</label><input class="input" id="rec-email" type="email" name="email" required></div>
+        <button class="btn btn--ghost btn--block" type="submit">Enviar enlace</button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>

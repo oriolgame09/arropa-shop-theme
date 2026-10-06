@@ -1,0 +1,22 @@
+<div class="wrap">
+  <div class="page-head">
+    <h1 class="display display--lg">Hola, {{ customer.first_name | default: 'bienvenida' }}</h1>
+    <p><a class="link-arrow" href="{{ routes.account_logout_url }}">Cerrar sesión</a></p>
+  </div>
+  <h2 class="display display--md" style="margin-bottom:24px;">Tus pedidos</h2>
+  {%- paginate customer.orders by 20 -%}
+    {%- if customer.orders.size > 0 -%}
+      {%- for order in customer.orders -%}
+        <div class="cart-line" style="grid-template-columns: 1fr auto auto;">
+          <a class="cart-line__title" href="{{ order.customer_url }}">Pedido {{ order.name }}</a>
+          <span>{{ order.created_at | date: '%d/%m/%Y' }}</span>
+          <strong>{{ order.total_price | money }}</strong>
+        </div>
+      {%- endfor -%}
+      {% render 'pagination', paginate: paginate %}
+    {%- else -%}
+      <p>Aún no has hecho ningún pedido.</p>
+    {%- endif -%}
+  {%- endpaginate -%}
+  <div style="height: clamp(56px, 8vw, 112px)"></div>
+</div>

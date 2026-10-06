@@ -1,0 +1,27 @@
+{%- comment -%} Uso: {% render 'icon', name: 'bag' %} {%- endcomment -%}
+<svg class="icon icon--{{ name }}" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {%- case name -%}
+    {%- when 'search' -%}
+      <circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/>
+    {%- when 'user' -%}
+      <circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.8-3.8 4-6 7.5-6s6.700 2.200 7.500 6"/>
+    {%- when 'bag' -%}
+      <path d="M5 8h14l-1 12.500H6L5 8Z"/><path d="M9 8V6.500a3 3 0 0 1 6 0V8"/>
+    {%- when 'menu' -%}
+      <path d="M4 8h16M4 16h16"/>
+    {%- when 'close' -%}
+      <path d="m6 6 12 12M18 6 6 18"/>
+    {%- when 'plus' -%}
+      <path d="M12 5v14M5 12h14"/>
+    {%- when 'arrow' -%}
+      <path d="M4 12h16m-6-6 6 6-6 6"/>
+    {%- when 'instagram' -%}
+      <rect x="4" y="4" width="16" height="16" rx="4.500"/><circle cx="12" cy="12" r="3.500"/><circle cx="16.800" cy="7.200" r=".6" fill="currentColor"/>
+    {%- when 'tiktok' -%}
+      <path d="M14 4v10.500a3.500 3.500 0 1 1-3.500-3.500"/><path d="M14 4c.3 2.400 1.900 4 4.500 4.200"/>
+    {%- when 'facebook' -%}
+      <path d="M14 8.500h2.500V5H14a3.500 3.500 0 0 0-3.500 3.500V11H8v3.500h2.500V21H14v-6.500h2.500L17 11h-3V8.500Z"/>
+    {%- when 'pinterest' -%}
+      <circle cx="12" cy="12" r="8.500"/><path d="m10.500 17 2-8.500M9.500 12.800c-.5-2.500 1.200-4.300 3.200-4.300 2.200 0 3 1.700 2.700 3.300-.3 1.800-1.400 3-2.700 2.700"/>
+  {%- endcase -%}
+</svg>

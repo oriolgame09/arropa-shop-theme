@@ -1,0 +1,34 @@
+{%- paginate search.results by 12 -%}
+  <div class="wrap">
+    <div class="page-head">
+      <h1 class="display display--lg">Buscar</h1>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="margin-top: 28px; max-width: 560px;">
+        <label class="visually-hidden" for="q">Buscar</label>
+        <input class="input" id="q" type="search" name="q" value="{{ search.terms | escape }}" placeholder="¿Qué buscas?">
+      </form>
+      {%- if search.performed -%}
+        <p style="opacity:.7;">{{ search.results_count }} resultado{% if search.results_count != 1 %}s{% endif %} para «{{ search.terms }}»</p>
+      {%- endif -%}
+    </div>
+
+    {%- if search.performed and search.results.size > 0 -%}
+      <div class="grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- else -%}
+            <article class="card"><h3 class="card__title"><a href="{{ item.url }}">{{ item.title }}</a></h3></article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {% render 'pagination', paginate: paginate %}
+    {%- elsif search.performed -%}
+      <div class="empty"><p class="display display--md">Sin resultados. Prueba con otra palabra.</p></div>
+    {%- endif -%}
+  </div>
+  <div style="height: clamp(56px, 8vw, 112px)"></div>
+{%- endpaginate -%}
+
+{% schema %}
+{ "name": "Búsqueda" }
+{% endschema %}

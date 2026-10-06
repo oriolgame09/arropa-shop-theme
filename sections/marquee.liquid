@@ -1,0 +1,36 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="marquee" aria-label="Mensajes de la tienda">
+    <div class="marquee__track">
+      {%- for i in (1..2) -%}
+        {%- for block in section.blocks -%}
+          <span class="marquee__item" {{ block.shopify_attributes }}{% if i == 2 %} aria-hidden="true"{% endif %}>{{ block.settings.text }}</span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Cinta de mensajes",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Mensaje",
+      "settings": [{ "type": "text", "id": "text", "label": "Texto", "default": "Calor de verdad" }]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cinta de mensajes",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Calor de verdad" } },
+        { "type": "item", "settings": { "text": "Sin cables" } },
+        { "type": "item", "settings": { "text": "Manos libres" } },
+        { "type": "item", "settings": { "text": "Envío gratis" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

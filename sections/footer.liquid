@@ -1,0 +1,73 @@
+{%- assign menu = linklists[section.settings.menu] -%}
+{%- assign menu_2 = linklists[section.settings.menu_2] -%}
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="logo" href="{{ routes.root_url }}">{{ shop.name }}</a>
+        {%- if section.settings.about != blank -%}<p>{{ section.settings.about }}</p>{%- endif -%}
+        <div class="social">
+          {%- assign networks = 'instagram,tiktok,facebook,pinterest' | split: ',' -%}
+          {%- for n in networks -%}
+            {%- assign key = 'social_' | append: n -%}
+            {%- assign url = settings[key] -%}
+            {%- if url != blank -%}
+              <a href="{{ url }}" target="_blank" rel="noopener" aria-label="{{ n | capitalize }}">{% render 'icon', name: n %}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div>
+        <h2>{{ section.settings.menu_title }}</h2>
+        <ul>{%- for link in menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+      </div>
+
+      <div>
+        <h2>{{ section.settings.menu_2_title }}</h2>
+        <ul>{%- for link in menu_2.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul>
+      </div>
+
+      <div class="footer__news">
+        <h2>{{ section.settings.news_title }}</h2>
+        {%- form 'customer', class: 'news-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="news">
+            <label class="visually-hidden" for="news-email">Correo electrónico</label>
+            <input id="news-email" type="email" name="contact[email]" placeholder="Tu correo electrónico" required autocomplete="email" value="{{ form.email }}">
+            <button type="submit" aria-label="Suscribirme">{% render 'icon', name: 'arrow' %}</button>
+          </div>
+          {%- if form.posted_successfully? -%}
+            <p class="footer__ok" role="status">¡Gracias! Ya estás dentro.</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <p class="footer__ok" role="alert">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <div class="payments">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag }}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    { "type": "textarea", "id": "about", "label": "Descripción de la marca", "default": "Calor de verdad en casa. Piezas de invierno pensadas para abrigarte sin encender la calefacción." },
+    { "type": "text", "id": "menu_title", "label": "Título columna 1", "default": "Tienda" },
+    { "type": "link_list", "id": "menu", "label": "Menú columna 1", "default": "main-menu" },
+    { "type": "text", "id": "menu_2_title", "label": "Título columna 2", "default": "Ayuda" },
+    { "type": "link_list", "id": "menu_2", "label": "Menú columna 2", "default": "footer" },
+    { "type": "text", "id": "news_title", "label": "Título boletín", "default": "Únete al calor" }
+  ]
+}
+{% endschema %}

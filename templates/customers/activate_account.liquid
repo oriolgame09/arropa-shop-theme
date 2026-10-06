@@ -1,0 +1,12 @@
+<div class="wrap">
+  <div class="form-card">
+    <h1 class="display display--lg">Activar cuenta</h1>
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}<p class="form-error" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <div class="field"><label for="a1">Contraseña</label><input class="input" id="a1" type="password" name="customer[password]" required></div>
+      <div class="field"><label for="a2">Repetir contraseña</label><input class="input" id="a2" type="password" name="customer[password_confirmation]" required></div>
+      <button class="btn btn--block" type="submit">Activar cuenta</button>
+      <button class="btn btn--ghost btn--block" style="margin-top:12px;" type="submit" name="decline">Rechazar invitación</button>
+    {%- endform -%}
+  </div>
+</div>

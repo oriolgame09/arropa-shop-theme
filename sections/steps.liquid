@@ -1,0 +1,47 @@
+<section class="section">
+  <div class="wrap">
+    <div class="section__head reveal">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="display display--lg">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="steps__grid">
+      {%- for block in section.blocks -%}
+        <div class="step reveal" {{ block.shopify_attributes }}>
+          <h3 class="step__title">{{ block.settings.title }}</h3>
+          <p class="step__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pasos",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sobretítulo", "default": "Cómo se usa" },
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Listo en <em>menos de un minuto</em>" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Llena" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Llena la bolsa hasta 2/3 con agua caliente del grifo o templada del hervidor. Nunca hirviendo." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pasos",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Llena", "text": "Llena la bolsa hasta 2/3 con agua caliente del grifo o templada del hervidor. Nunca hirviendo." } },
+        { "type": "step", "settings": { "title": "Cierra", "text": "Saca el aire apretando suavemente y enrosca bien el tapón." } },
+        { "type": "step", "settings": { "title": "Abróchala", "text": "Métela en la funda y abróchatela a la cintura. Calor durante horas, con las manos libres." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

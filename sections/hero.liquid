@@ -1,0 +1,49 @@
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="display display--xl">{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}
+        <p class="lead">{{ section.settings.text }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a class="btn btn--accent" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          {{ section.settings.button_label }} {% render 'icon', name: 'arrow' %}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.note != blank -%}
+        <p class="hero__note">{{ section.settings.note }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="hero__media reveal">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '500, 700, 900, 1200, 1400', sizes: '(min-width: 900px) 45vw, 90vw', alt: section.settings.image.alt | default: section.settings.heading | strip_html }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder' }}
+      {%- endif -%}
+      {%- if section.settings.badge != blank -%}
+        <div class="hero__badge">{{ section.settings.badge }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Portada",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sobretítulo", "default": "Colección de invierno" },
+    { "type": "inline_richtext", "id": "heading", "label": "Título (usa cursiva para resaltar)", "default": "Calor de verdad en casa, <em>sin encender</em> la calefacción" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Una bolsa de agua caliente dentro de una funda de peluche que se abrocha a la cintura. Calor durante horas, con las manos libres y sin cables." },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Quiero el mío" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "29,90 € con envío gratis incluido" },
+    { "type": "text", "id": "badge", "label": "Sello redondo (opcional)", "default": "Envío gratis" },
+    { "type": "image_picker", "id": "image", "label": "Imagen (vertical, 4:5)" }
+  ],
+  "presets": [{ "name": "Portada" }]
+}
+{% endschema %}

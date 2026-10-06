@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "perks": { "type": "perks", "settings": { "perk_1": "Envío gratis con seguimiento (5-10 días laborables)", "perk_2": "14 días para devolverlo", "perk_3": "Pago seguro: tarjeta, Apple Pay o Google Pay" } },
+        "tab_1": { "type": "tab", "settings": { "heading": "Envíos", "content": "<p>Envío gratuito con seguimiento en 5-10 días laborables.</p>" } },
+        "tab_2": { "type": "tab", "settings": { "heading": "Devoluciones", "content": "<p>Dispones de 14 días para devolver tu pedido si no te convence.</p>" } }
+      },
+      "block_order": ["perks", "tab_1", "tab_2"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

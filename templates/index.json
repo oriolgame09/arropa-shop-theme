@@ -1,0 +1,74 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Colección de invierno",
+        "heading": "Calor de verdad en casa, <em>sin encender</em> la calefacción",
+        "text": "Una bolsa de agua caliente dentro de una funda de peluche que se abrocha a la cintura. Calor durante horas, con las manos libres y sin cables.",
+        "button_label": "Quiero el mío",
+        "button_link": "shopify://collections/all",
+        "note": "29,90 € con envío gratis incluido",
+        "badge": "Envío gratis"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "m1": { "type": "item", "settings": { "text": "Calor de verdad" } },
+        "m2": { "type": "item", "settings": { "text": "Sin cables" } },
+        "m3": { "type": "item", "settings": { "text": "Manos libres" } },
+        "m4": { "type": "item", "settings": { "text": "Envío gratis" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"]
+    },
+    "trust": {
+      "type": "trust-bar",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "title": "Envío gratis", "text": "Con seguimiento, en 5-10 días laborables" } },
+        "t2": { "type": "item", "settings": { "title": "14 días para devolverlo", "text": "Si no te convence, nos lo devuelves" } },
+        "t3": { "type": "item", "settings": { "title": "Pago seguro", "text": "Tarjeta, Apple Pay o Google Pay" } }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    },
+    "steps": {
+      "type": "steps",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Llena", "text": "Llena la bolsa hasta 2/3 con agua caliente del grifo o templada del hervidor. Nunca hirviendo." } },
+        "s2": { "type": "step", "settings": { "title": "Cierra", "text": "Saca el aire apretando suavemente y enrosca bien el tapón." } },
+        "s3": { "type": "step", "settings": { "title": "Abróchala", "text": "Métela en la funda y abróchatela a la cintura. Calor durante horas, con las manos libres." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "Cómo se usa",
+        "heading": "Listo en <em>menos de un minuto</em>"
+      }
+    },
+    "collection": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Para ti",
+        "heading": "Nuestra colección de <em>invierno</em>",
+        "text": "Piezas pensadas para pasar el invierno en casa con calor y sin encender la calefacción.",
+        "limit": 6,
+        "button_label": "Ver toda la colección"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": { "type": "question", "settings": { "question": "¿Cuánto tiempo dura caliente?", "answer": "<p>Varias horas. Depende de la temperatura del agua y de la de la habitación; la funda de peluche ayuda a conservar el calor.</p>" } },
+        "q2": { "type": "question", "settings": { "question": "¿Necesita pilas o enchufe?", "answer": "<p>No. Funciona solo con agua caliente: sin pilas, sin enchufe y sin cables.</p>" } },
+        "q3": { "type": "question", "settings": { "question": "¿Se puede lavar la funda?", "answer": "<p>Sí. Saca la bolsa de la funda y lávala siguiendo las instrucciones de la etiqueta.</p>" } },
+        "q4": { "type": "question", "settings": { "question": "¿Cuándo llega mi pedido?", "answer": "<p>Entre 5 y 10 días laborables, con envío gratis y número de seguimiento.</p>" } },
+        "q5": { "type": "question", "settings": { "question": "¿Puedo devolverlo?", "answer": "<p>Sí. Tienes 14 días para devolverlo si no te convence.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5"],
+      "settings": {
+        "eyebrow": "Dudas",
+        "heading": "Preguntas <em>frecuentes</em>"
+      }
+    }
+  },
+  "order": ["hero", "marquee", "trust", "steps", "collection", "faq"]
+}

@@ -1,0 +1,17 @@
+<div class="wrap">
+  <div class="page-head">
+    <h1 class="display display--lg">Pedido {{ order.name }}</h1>
+    <p>{{ order.created_at | date: '%d/%m/%Y' }} · <a class="link-arrow" href="{{ routes.account_url }}">Volver a mi cuenta</a></p>
+  </div>
+  {%- for line in order.line_items -%}
+    <div class="cart-line" style="grid-template-columns: 1fr auto auto;">
+      <span class="cart-line__title">{{ line.title }}</span>
+      <span>× {{ line.quantity }}</span>
+      <strong>{{ line.final_line_price | money }}</strong>
+    </div>
+  {%- endfor -%}
+  <div class="cart-summary">
+    <div class="cart-summary__row"><span>Total</span><strong>{{ order.total_price | money }}</strong></div>
+  </div>
+  <div style="height: clamp(56px, 8vw, 112px)"></div>
+</div>
