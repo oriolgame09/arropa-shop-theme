@@ -48,7 +48,15 @@
     </div>
 
     <div class="footer__bottom">
-      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+      <div class="legal">
+        <span>© {{ 'now' | date: '%Y' }} {{ section.settings.legal_name | default: shop.name }}</span>
+        {%- if section.settings.legal_id != blank -%}<span>NIF/CIF: {{ section.settings.legal_id }}</span>{%- endif -%}
+        {%- if section.settings.legal_address != blank -%}<span>{{ section.settings.legal_address }}</span>{%- endif -%}
+        {%- if section.settings.legal_email != blank -%}<a href="mailto:{{ section.settings.legal_email }}">{{ section.settings.legal_email }}</a>{%- endif -%}
+      </div>
+      <nav class="legal-links" aria-label="Políticas">
+        {%- for policy in shop.policies -%}<a href="{{ policy.url }}">{{ policy.title }}</a>{%- endfor -%}
+      </nav>
       <div class="payments">
         {%- for type in shop.enabled_payment_types -%}
           {{ type | payment_type_svg_tag }}
@@ -67,7 +75,12 @@
     { "type": "link_list", "id": "menu", "label": "Menú columna 1", "default": "main-menu" },
     { "type": "text", "id": "menu_2_title", "label": "Título columna 2", "default": "Ayuda" },
     { "type": "link_list", "id": "menu_2", "label": "Menú columna 2", "default": "footer" },
-    { "type": "text", "id": "news_title", "label": "Título boletín", "default": "Únete al calor" }
+    { "type": "text", "id": "news_title", "label": "Título boletín", "default": "Únete al calor" },
+    { "type": "header", "content": "Datos legales (obligatorios en la UE)" },
+    { "type": "text", "id": "legal_name", "label": "Razón social o nombre del titular" },
+    { "type": "text", "id": "legal_id", "label": "NIF / CIF" },
+    { "type": "text", "id": "legal_address", "label": "Dirección completa" },
+    { "type": "text", "id": "legal_email", "label": "Correo de contacto" }
   ]
 }
 {% endschema %}

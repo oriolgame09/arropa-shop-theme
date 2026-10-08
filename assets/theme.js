@@ -116,6 +116,19 @@
         return vals;
       }
 
+      function markAvailability() {
+        var vals = selected();
+        root.querySelectorAll('[data-option]').forEach(function (fs, idx) {
+          fs.querySelectorAll('input').forEach(function (input) {
+            var ok = variants.some(function (v) {
+              return v.available && v.options[idx] === input.value &&
+                v.options.every(function (o, i) { return i === idx || vals[i] === null || o === vals[i]; });
+            });
+            if (ok) input.removeAttribute('data-unavailable'); else input.setAttribute('data-unavailable', '');
+          });
+        });
+      }
+
       function showStock(v) {
         if (!stockEl) return;
         var n = v && v.available ? v.stock : 0;
@@ -139,6 +152,7 @@
         if (compareEl) { compareEl.textContent = match.compare; compareEl.hidden = !match.onsale; }
         setAdd(match.available ? 'Añadir a la cesta' : 'Agotado', !match.available);
         showStock(match);
+        markAvailability();
         var url = new URL(window.location.href);
         url.searchParams.set('variant', match.id);
         window.history.replaceState({}, '', url);
@@ -151,6 +165,7 @@
       /* estado inicial */
       var current = idInput ? variants.find(function (v) { return String(v.id) === String(idInput.value); }) : null;
       showStock(current || null);
+      markAvailability();
       initDelivery(root);
 
       /* barra de compra: aparece al salir del botón principal de la pantalla */
@@ -163,6 +178,21 @@
           buybar.querySelector('[data-add]').tabIndex = out ? 0 : -1;
         }).observe(mainBtn);
       }
+    });
+  }
+
+  /* ---------- Guía de tallas (panel nativo) ---------- */
+  function initGuide() {
+    document.addEventListener('click', function (e) {
+      var open = e.target.closest('[data-guide-open]');
+      if (open) {
+        var d = document.getElementById(open.getAttribute('data-guide-open'));
+        if (d && d.showModal) d.showModal();
+        return;
+      }
+      var close = e.target.closest('[data-guide-close]');
+      if (close) { var dlg = close.closest('dialog'); if (dlg) dlg.close(); return; }
+      if (e.target.tagName === 'DIALOG' && e.target.classList.contains('guide')) e.target.close();
     });
   }
 
@@ -203,6 +233,7 @@
     initDrawer(document);
     initTheme();
     initGlow();
+    initGuide();
     init(document);
   });
 

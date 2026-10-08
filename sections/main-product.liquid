@@ -48,6 +48,14 @@
         {%- endfor -%}
       {%- endunless -%}
 
+      {%- assign size_guide = section.blocks | where: 'type', 'size_guide' | first -%}
+      {%- if size_guide != blank -%}
+        {%- if size_guide.settings.fit_note != blank -%}<p class="fit-note" {{ size_guide.shopify_attributes }}>{{ size_guide.settings.fit_note }}</p>{%- endif -%}
+        {%- if size_guide.settings.table != blank -%}
+          <button class="size-guide-btn" type="button" data-guide-open="size-guide">{{ size_guide.settings.button_label }}</button>
+        {%- endif -%}
+      {%- endif -%}
+
       {%- if form.errors -%}
         <p class="form-error" role="alert">{{ form.errors | default_errors }}</p>
       {%- endif -%}
@@ -92,6 +100,8 @@
               {%- if block.settings[key] != blank -%}<li>{{ block.settings[key] }}</li>{%- endif -%}
             {%- endfor -%}
           </ul>
+        {%- when 'size_guide' -%}
+          {%- comment -%} Se muestra junto a las tallas (arriba). {%- endcomment -%}
         {%- when 'tab' -%}
           <details class="acc" {{ block.shopify_attributes }}>
             <summary>{{ block.settings.heading }} {% render 'icon', name: 'plus' %}</summary>
@@ -111,6 +121,18 @@
     <span>{% if current_variant.available %}Añadir{% else %}Agotado{% endif %}</span>
   </button>
 </div>
+
+{%- if size_guide != blank and size_guide.settings.table != blank -%}
+  <dialog class="guide" id="size-guide" aria-labelledby="size-guide-title">
+    <div class="guide__inner">
+      <div class="guide__head">
+        <h2 id="size-guide-title">{{ size_guide.settings.title }}</h2>
+        <button class="icon-btn" type="button" data-guide-close aria-label="Cerrar">{% render 'icon', name: 'close' %}</button>
+      </div>
+      {{ size_guide.settings.table }}
+    </div>
+  </dialog>
+{%- endif -%}
 
 <script type="application/ld+json">
   {{ product | structured_data }}
@@ -135,6 +157,17 @@
         { "type": "text", "id": "perk_1", "label": "Ventaja 1", "default": "Envío gratis con seguimiento" },
         { "type": "text", "id": "perk_2", "label": "Ventaja 2", "default": "14 días para devolverlo" },
         { "type": "text", "id": "perk_3", "label": "Ventaja 3", "default": "Pago seguro" }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Guía de tallas",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "button_label", "label": "Texto del enlace", "default": "Guía de tallas" },
+        { "type": "text", "id": "title", "label": "Título del panel", "default": "Guía de tallas" },
+        { "type": "text", "id": "fit_note", "label": "Línea de ajuste (ej.: Ajuste regular · Mide 1,75 y lleva M)" },
+        { "type": "html", "id": "table", "label": "Tabla de medidas en HTML (si está vacía, no se muestra el enlace)", "default": "<table><thead><tr><th>Talla</th><th>Pecho (cm)</th><th>Cintura (cm)</th><th>Cadera (cm)</th></tr></thead><tbody><tr><td>S</td><td>—</td><td>—</td><td>—</td></tr><tr><td>M</td><td>—</td><td>—</td><td>—</td></tr><tr><td>L</td><td>—</td><td>—</td><td>—</td></tr></tbody></table><p>Sustituye los guiones por las medidas reales confirmadas con tu proveedor.</p>" }
       ]
     },
     {
