@@ -433,6 +433,3 @@ dialog.guide::backdrop { background: rgba(5, 5, 6, .55); -webkit-backdrop-filter
 /* Pie: datos legales y políticas */
 .legal { display: grid; gap: 4px; font-size: 13px; opacity: .65; }
 .legal-links { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13px; }
-
-/* La foto de portada trae fondo negro: se funde con el fondo oscuro de la portada */
-.hero .media-frame img, .hero .media-frame video { mix-blend-mode: screen; border-radius: 0; }
