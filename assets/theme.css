@@ -461,3 +461,10 @@ dialog.guide::backdrop { background: rgba(5, 5, 6, .55); -webkit-backdrop-filter
 .hero .btn--accent { background: linear-gradient(135deg, #F6DCC9 0%, #E0AE96 55%, #CC967E 100%); color: #2A1710; box-shadow: 0 12px 30px -14px rgba(224, 174, 150, .7); }
 .hero__note { color: #E9E4DF; }
 @media (max-width: 899px) { .hero__badge { width: 92px; height: 92px; font-size: 11px; } }
+
+/* Tamaño del producto en la portada */
+.hero .media-frame img { width: 112%; max-width: none; margin-left: -6%; }
+.hero__media::before { inset: -26% -22% -18% -22%; }
+@media (max-width: 899px) { .hero .media-frame img { width: 104%; margin-left: -2%; } .hero__media { max-width: 520px; } }
+.hero__badge { left: 3%; bottom: -17%; }
+@media (max-width: 899px) { .hero__media { margin-bottom: 44px; } .hero__badge { left: 0; bottom: -12%; } }
