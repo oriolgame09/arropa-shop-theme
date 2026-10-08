@@ -1,0 +1,54 @@
+{%- if section.settings.enabled -%}
+<section class="section reviews">
+  <div class="wrap">
+    <div class="section__head reveal">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="display display--lg">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="reviews__grid">
+      {%- for block in section.blocks -%}
+        <figure class="review reveal" {{ block.shopify_attributes }}>
+          <div class="review__stars" role="img" aria-label="{{ block.settings.stars }} de 5 estrellas">
+            {%- for i in (1..5) -%}
+              <span{% if i > block.settings.stars %} class="is-off"{% endif %}>★</span>
+            {%- endfor -%}
+          </div>
+          {%- if block.settings.title != blank -%}<p class="review__title">{{ block.settings.title }}</p>{%- endif -%}
+          <blockquote class="review__text">{{ block.settings.text }}</blockquote>
+          <figcaption class="review__author">
+            <strong>{{ block.settings.name }}</strong>
+            {%- if block.settings.product != blank -%}<span>{{ block.settings.product }}</span>{%- endif -%}
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Reseñas de clientes",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Mostrar esta sección", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Sobretítulo", "default": "Opiniones" },
+    { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Lo que dicen <em>nuestras clientas</em>" },
+    { "type": "paragraph", "content": "IMPORTANTE: las reseñas de ejemplo son ficticias. Sustitúyelas por opiniones reales de tus clientes antes de publicar: en España y la UE mostrar reseñas falsas como reales está prohibido." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Reseña",
+      "settings": [
+        { "type": "range", "id": "stars", "label": "Estrellas", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "title", "label": "Titular", "default": "Justo lo que buscaba" },
+        { "type": "textarea", "id": "text", "label": "Opinión", "default": "Escribe aquí la opinión de tu cliente." },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Nombre A." },
+        { "type": "text", "id": "product", "label": "Producto (opcional)" }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [{ "name": "Reseñas de clientes", "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }] }]
+}
+{% endschema %}
