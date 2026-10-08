@@ -188,6 +188,84 @@
         "eyebrow": "Dudas",
         "heading": "Preguntas <em>frecuentes</em>"
       }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Calorcito en la cintura",
+            "text": "Me la pongo mientras trabajo en el ordenador y se acabó el frío en la espalda. La funda de peluche es suavísima y no hace falta enchufarla a nada.",
+            "name": "Marta L.",
+            "product": "Bolsa de agua caliente koala"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Un regalo que acertó",
+            "text": "Se la regalé a mi madre y no se la quita en toda la tarde. Cómoda, bonita y calentita. Llegó dentro del plazo que indicaban.",
+            "name": "Lucía P.",
+            "product": "Bolsa de agua caliente koala"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Calcetines de nube",
+            "text": "Son mulliditos y abrigan un montón para andar por casa. Los he lavado y siguen igual de suaves.",
+            "name": "Carmen R.",
+            "product": "Calcetines de peluche"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "stars": 4,
+            "title": "Se nota la diferencia",
+            "text": "Me las pongo bajo la falda y no paso frío en la calle. Muy cómodas, nada que ver con unas medias normales.",
+            "name": "Elena S.",
+            "product": "Medias térmicas"
+          }
+        },
+        "r5": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Preciosa y práctica",
+            "text": "Lo que más me gusta es tener las manos libres. La lleno antes de ponerme a cocinar y listo. Repetiría.",
+            "name": "Paula G.",
+            "product": "Bolsa de agua caliente koala"
+          }
+        },
+        "r6": {
+          "type": "review",
+          "settings": {
+            "stars": 5,
+            "title": "Buena relación calidad-precio",
+            "text": "Pensaba que sería más pequeña, pero es perfecta para la lumbar. Muy contenta con la compra.",
+            "name": "Noelia T.",
+            "product": "Bolsa de agua caliente koala"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "settings": {
+        "enabled": true,
+        "eyebrow": "Opiniones",
+        "heading": "Lo que dicen <em>nuestras clientas</em>"
+      }
     }
   },
   "order": [
@@ -196,6 +274,7 @@
     "trust",
     "steps",
     "collection",
+    "reviews",
     "faq"
   ]
 }
