@@ -1,5 +1,5 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
-<section class="wrap product" data-product>
+<section class="wrap product" data-product data-low-stock="{{ section.settings.low_stock }}" data-min-days="{{ section.settings.min_days }}" data-max-days="{{ section.settings.max_days }}">
   <div class="product__gallery">
     {%- for media in product.media -%}
       {%- if media.media_type == 'image' -%}
@@ -25,6 +25,10 @@
     {%- endif -%}
     <h1 class="product__title">{{ product.title }}</h1>
     <div class="product__price">{% render 'price', product: product %}</div>
+
+    {%- if section.settings.low_stock > 0 -%}
+      <p class="stock" data-stock hidden><i></i><span></span></p>
+    {%- endif -%}
 
     {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
       <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
@@ -59,13 +63,20 @@
         </button>
       </div>
 
+      {%- if section.settings.max_days > 0 -%}
+        <p class="delivery" data-delivery>
+          {% render 'icon', name: 'bag' %}
+          <span>Entrega estimada: <strong data-delivery-range>{{ section.settings.min_days }}-{{ section.settings.max_days }} días laborables</strong> · envío gratis con seguimiento</span>
+        </p>
+      {%- endif -%}
+
       {%- if section.settings.show_dynamic_checkout -%}
         {{ form | payment_button }}
       {%- endif -%}
     {%- endform -%}
 
     <script type="application/json" data-variants>
-      [{% for v in product.variants %}{"id":{{ v.id }},"options":{{ v.options | json }},"available":{{ v.available }},"price":{{ v.price | money | json }},"compare":{{ v.compare_at_price | money | json }},"onsale":{% if v.compare_at_price > v.price %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+      [{% for v in product.variants %}{"id":{{ v.id }},"options":{{ v.options | json }},"stock":{% if v.inventory_management == 'shopify' and v.inventory_quantity > 0 %}{{ v.inventory_quantity }}{% else %}0{% endif %},"available":{{ v.available }},"price":{{ v.price | money | json }},"compare":{{ v.compare_at_price | money | json }},"onsale":{% if v.compare_at_price > v.price %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}{% endfor %}]
     </script>
 
     {%- if product.description != blank -%}
@@ -91,6 +102,16 @@
   </div>
 </section>
 
+<div class="buybar" data-buybar aria-hidden="true">
+  <div class="buybar__info">
+    <span class="buybar__title">{{ product.title }}</span>
+    <span class="price"><span class="price__current" data-price-mirror>{{ current_variant.price | money }}</span></span>
+  </div>
+  <button class="btn btn--accent" type="submit" form="product-form" name="add" data-add tabindex="-1"{% unless current_variant.available %} disabled{% endunless %}>
+    <span>{% if current_variant.available %}Añadir{% else %}Agotado{% endif %}</span>
+  </button>
+</div>
+
 <script type="application/ld+json">
   {{ product | structured_data }}
 </script>
@@ -100,6 +121,9 @@
   "name": "Producto",
   "settings": [
     { "type": "checkbox", "id": "show_vendor", "label": "Mostrar marca", "default": false },
+    { "type": "range", "id": "low_stock", "label": "Avisar cuando queden pocas unidades (solo con inventario real; 0 = no avisar)", "min": 0, "max": 20, "step": 1, "default": 10 },
+    { "type": "range", "id": "min_days", "label": "Entrega: días laborables mínimos", "min": 1, "max": 30, "step": 1, "default": 5 },
+    { "type": "range", "id": "max_days", "label": "Entrega: días laborables máximos (0 = ocultar)", "min": 0, "max": 40, "step": 1, "default": 10 },
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Mostrar botones de pago rápido (Apple Pay, Google Pay…)", "default": true }
   ],
   "blocks": [

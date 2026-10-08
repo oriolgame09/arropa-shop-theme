@@ -22,6 +22,10 @@
     </a>
 
     <div class="header__icons">
+      <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Cambiar entre modo claro y oscuro">
+        <span class="theme-toggle__sun">{% render 'icon', name: 'sun' %}</span>
+        <span class="theme-toggle__moon">{% render 'icon', name: 'moon' %}</span>
+      </button>
       <a class="icon-btn" href="{{ routes.search_url }}" aria-label="Buscar">{% render 'icon', name: 'search' %}</a>
       {%- if shop.customer_accounts_enabled -%}
         <a class="icon-btn" href="{{ routes.account_url }}" aria-label="Mi cuenta">{% render 'icon', name: 'user' %}</a>

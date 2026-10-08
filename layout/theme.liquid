@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_bg }}">
+  <meta name="theme-color" content="#07080C">
   <link rel="canonical" href="{{ canonical_url }}">
   {%- if settings.favicon != blank -%}
     <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
@@ -29,21 +29,25 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   {{ content_for_header }}
 
   <style>
     :root {
-      --bg: {{ settings.color_bg }};
-      --ink: {{ settings.color_ink }};
       --accent: {{ settings.color_accent }};
-      --sky: {{ settings.color_sky }};
-      --font-head: 'Fraunces', 'Times New Roman', serif;
-      --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --glow: {{ settings.color_glow }};
     }
   </style>
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    (function () {
+      try {
+        var t = localStorage.getItem('theme') || '{{ settings.default_mode }}';
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
   {{ 'theme.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'theme.js' | asset_url }}" defer></script>
 </head>

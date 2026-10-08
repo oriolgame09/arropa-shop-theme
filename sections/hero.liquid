@@ -20,7 +20,9 @@
 
     <div class="hero__media">
       <div class="media-frame">
-        {%- if section.settings.image != blank -%}
+        {%- if section.settings.video != blank -%}
+          {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, image_size: '1400x' }}
+        {%- elsif section.settings.image != blank -%}
           {%- assign hero_alt = section.settings.image.alt | default: section.settings.heading | strip_html | escape -%}
           {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '500, 700, 900, 1200, 1400', sizes: '(min-width: 900px) 45vw, 90vw', alt: hero_alt }}
         {%- else -%}
@@ -46,7 +48,8 @@
     { "type": "url", "id": "button_link", "label": "Enlace del botón (si no eliges producto)" },
     { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "29,90 € con envío gratis incluido" },
     { "type": "text", "id": "badge", "label": "Sello redondo (opcional)", "default": "Envío gratis" },
-    { "type": "image_picker", "id": "image", "label": "Imagen (vertical, 4:5)" }
+    { "type": "image_picker", "id": "image", "label": "Imagen (vertical, 4:5)" },
+    { "type": "video", "id": "video", "label": "Vídeo en bucle (opcional, sustituye a la imagen; que pese menos de 1,5 MB)" }
   ],
   "presets": [{ "name": "Portada" }]
 }

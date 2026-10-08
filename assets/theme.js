@@ -60,7 +60,27 @@
     });
   }
 
-  /* ---------- Selector de variantes ---------- */
+  /* ---------- Fecha estimada de entrega (días laborables) ---------- */
+  function addBusinessDays(date, n) {
+    var d = new Date(date.getTime());
+    while (n > 0) {
+      d.setDate(d.getDate() + 1);
+      var day = d.getDay();
+      if (day !== 0 && day !== 6) n--;
+    }
+    return d;
+  }
+  function initDelivery(root) {
+    var out = root.querySelector('[data-delivery-range]');
+    var min = parseInt(root.dataset.minDays, 10), max = parseInt(root.dataset.maxDays, 10);
+    if (!out || !min || !max) return;
+    try {
+      var fmt = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' });
+      out.textContent = 'entre el ' + fmt.format(addBusinessDays(new Date(), min)) + ' y el ' + fmt.format(addBusinessDays(new Date(), max));
+    } catch (e) { /* se queda el texto de días laborables */ }
+  }
+
+  /* ---------- Selector de variantes, stock real y barra de compra ---------- */
   function initProduct(scope) {
     (scope || document).querySelectorAll('[data-product]').forEach(function (root) {
       if (root.dataset.ready) return;
@@ -72,8 +92,20 @@
       var idInput = root.querySelector('[data-variant-id]');
       var priceEl = root.querySelector('[data-price]');
       var compareEl = root.querySelector('[data-compare]');
-      var addBtn = root.querySelector('[data-add]');
-      var addLabel = addBtn ? addBtn.querySelector('span') : null;
+      var stockEl = root.querySelector('[data-stock]');
+      var lowStock = parseInt(root.dataset.lowStock, 10) || 0;
+      var buybar = document.querySelector('[data-buybar]');
+      var mirror = buybar ? buybar.querySelector('[data-price-mirror]') : null;
+      var addBtns = document.querySelectorAll('[data-add]');
+
+      function setAdd(label, disabled) {
+        addBtns.forEach(function (btn) {
+          var span = btn.querySelector('span');
+          var short = btn.closest('[data-buybar]') !== null;
+          if (span) span.textContent = (short && label === 'Añadir a la cesta') ? 'Añadir' : label;
+          btn.disabled = disabled;
+        });
+      }
 
       function selected() {
         var vals = [];
@@ -84,25 +116,29 @@
         return vals;
       }
 
+      function showStock(v) {
+        if (!stockEl) return;
+        var n = v && v.available ? v.stock : 0;
+        if (lowStock > 0 && n > 0 && n <= lowStock) {
+          stockEl.querySelector('span').textContent = n === 1 ? 'Queda 1 unidad' : 'Quedan ' + n + ' unidades';
+          stockEl.hidden = false;
+        } else {
+          stockEl.hidden = true;
+        }
+      }
+
       function update() {
         var vals = selected();
         var match = variants.find(function (v) {
           return v.options.every(function (o, i) { return o === vals[i]; });
         });
-        if (!match) {
-          if (addBtn) { addBtn.disabled = true; if (addLabel) addLabel.textContent = 'No disponible'; }
-          return;
-        }
+        if (!match) { setAdd('No disponible', true); showStock(null); return; }
         if (idInput) idInput.value = match.id;
         if (priceEl) priceEl.textContent = match.price;
-        if (compareEl) {
-          compareEl.textContent = match.compare;
-          compareEl.hidden = !match.onsale;
-        }
-        if (addBtn) {
-          addBtn.disabled = !match.available;
-          if (addLabel) addLabel.textContent = match.available ? 'Añadir a la cesta' : 'Agotado';
-        }
+        if (mirror) mirror.textContent = match.price;
+        if (compareEl) { compareEl.textContent = match.compare; compareEl.hidden = !match.onsale; }
+        setAdd(match.available ? 'Añadir a la cesta' : 'Agotado', !match.available);
+        showStock(match);
         var url = new URL(window.location.href);
         url.searchParams.set('variant', match.id);
         window.history.replaceState({}, '', url);
@@ -111,7 +147,50 @@
       root.querySelectorAll('[data-option] input').forEach(function (i) {
         i.addEventListener('change', update);
       });
+
+      /* estado inicial */
+      var current = idInput ? variants.find(function (v) { return String(v.id) === String(idInput.value); }) : null;
+      showStock(current || null);
+      initDelivery(root);
+
+      /* barra de compra: aparece al salir del botón principal de la pantalla */
+      var mainBtn = root.querySelector('[data-add]');
+      if (buybar && mainBtn && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          var out = !entries[0].isIntersecting && entries[0].boundingClientRect.top < 0;
+          buybar.classList.toggle('is-visible', out);
+          buybar.setAttribute('aria-hidden', out ? 'false' : 'true');
+          buybar.querySelector('[data-add]').tabIndex = out ? 0 : -1;
+        }).observe(mainBtn);
+      }
     });
+  }
+
+  /* ---------- Modo claro / oscuro ---------- */
+  function initTheme() {
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-theme-toggle]');
+      if (!btn) return;
+      var root = document.documentElement;
+      var current = root.getAttribute('data-theme');
+      if (!current) current = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (err) {}
+    });
+  }
+
+  /* ---------- Luz que sigue al cursor en las tarjetas ---------- */
+  function initGlow() {
+    if (!window.matchMedia('(hover: hover)').matches) return;
+    document.addEventListener('pointermove', function (e) {
+      var card = e.target.closest && e.target.closest('.card');
+      if (!card) return;
+      var media = card.querySelector('.card__media') || card;
+      var r = media.getBoundingClientRect();
+      card.style.setProperty('--x', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--y', (e.clientY - r.top) + 'px');
+    }, { passive: true });
   }
 
   function init(scope) {
@@ -122,6 +201,8 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     initDrawer(document);
+    initTheme();
+    initGlow();
     init(document);
   });
 
